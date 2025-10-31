@@ -1,158 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Core Metadata -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WeatherNow — Real-Time Weather App</title>
-    <meta
-      name="description"
-      content="WeatherNow — simple real-time weather app using OpenWeatherMap API with geolocation, caching, and dark mode."
-    />
+    <meta name="description" content="WeatherNow — simple real-time weather app using OpenWeatherMap API with geolocation, caching, and dark mode." />
     <meta name="theme-color" content="#0b5ed7" />
-
-    <!-- Performance Optimizations -->
     <link rel="preconnect" href="https://api.openweathermap.org" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" href="styles.css" as="style" />
     <link rel="stylesheet" href="styles.css" />
-
-    <!-- Favicon & Manifest (optional for PWA/SEO) -->
     <link rel="icon" href="assets/favicon.png" type="image/png" />
-    <link rel="manifest" href="manifest.json" />
-
-    <!-- Accessibility helpers -->
-    <meta name="robots" content="index, follow" />
   </head>
 
   <body>
     <header class="site-header">
       <div class="container header-container">
         <h1 class="logo">WeatherNow</h1>
-        <button
-          id="themeToggle"
-          class="theme-toggle"
-          aria-label="Toggle dark mode"
-          aria-pressed="false"
-        >
-          🌙
-        </button>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" aria-pressed="false">🌙</button>
       </div>
     </header>
 
-    <main class="container main" role="main">
-      <!-- Search Section -->
-      <section
-        class="search-section"
-        aria-label="Search for city weather"
-        aria-describedby="message"
-      >
+    <main class="container main">
+      <section class="search-section">
         <form id="searchForm" class="search-form" autocomplete="off">
-          <label for="cityInput" class="visually-hidden">City name</label>
-          <input
-            id="cityInput"
-            name="city"
-            type="search"
-            placeholder="Enter city name (e.g., London)"
-            required
-            aria-required="true"
-          />
+          <input id="cityInput" type="search" placeholder="Enter city name (e.g., London)" required />
           <button id="searchBtn" type="submit" class="search-btn">Search</button>
-
-          <!-- location button (id matches script.js) -->
-          <button
-            id="locationBtn"
-            type="button"
-            class="favorite-btn"
-            aria-label="Use my location"
-            title="Use my location"
-          >
-            📍 Use my location
-          </button>
+          <button id="locationBtn" type="button" class="favorite-btn" title="Use my location">📍 Use my location</button>
         </form>
-
-        <div class="controls-row" style="margin-top: 0.5rem">
-          <div
-            id="message"
-            role="status"
-            class="message"
-            aria-live="polite"
-          ></div>
-        </div>
-
-        <!-- Loading Spinner (exists as a separate element; JS will toggle hidden) -->
-        <div
-          id="spinner"
-          class="spinner"
-          hidden
-          aria-hidden="true"
-          aria-label="Loading weather data"
-        >
-          <div class="dot1"></div>
-          <div class="dot2"></div>
-          <div class="dot3"></div>
+        <div id="message" class="message"></div>
+        <div id="spinner" class="spinner" hidden>
+          <div class="dot1"></div><div class="dot2"></div><div class="dot3"></div>
         </div>
       </section>
 
-      <!-- Weather Card -->
-      <section
-        id="weatherCard"
-        class="weather-card"
-        aria-live="polite"
-        aria-atomic="true"
-      >
+      <section id="weatherCard" class="weather-card">
         <p class="placeholder">Search a city to see current weather.</p>
       </section>
 
-      <!-- Favorites -->
-      <section id="favorites" class="favorites" aria-label="Favorite cities">
-        <div
-          style="display: flex; align-items: center; justify-content: space-between; gap: 1rem"
-        >
-          <h2 style="margin: 0">Favorites</h2>
-          <div style="display: flex; gap: 0.5rem; align-items: center">
-            <div
-              id="favCount"
-              aria-live="polite"
-              style="color: var(--muted); font-size: 0.95rem"
-            >
-              0 saved
-            </div>
-            <button
-              id="clearFavsBtn"
-              type="button"
-              class="favorite-btn"
-              aria-label="Clear all favorites"
-            >
-              Clear All
-            </button>
+      <section id="favorites" class="favorites">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <h2>Favorites</h2>
+          <div style="display:flex;align-items:center;gap:.5rem">
+            <div id="favCount" style="color:var(--muted);font-size:.9rem">0 saved</div>
+            <button id="clearFavsBtn" type="button" class="favorite-btn">Clear All</button>
           </div>
         </div>
-
-        <div
-          id="favoriteList"
-          class="favorite-list"
-          style="margin-top: 0.5rem"
-          role="list"
-        >
-          <!-- Favorite city buttons injected here -->
-        </div>
+        <div id="favoriteList" class="favorite-list" style="margin-top:.5rem"></div>
       </section>
     </main>
 
     <footer class="site-footer">
       <div class="container">
-        <small>
-          Built with <strong>HTML</strong> · <strong>CSS</strong> ·
-          <strong>JavaScript</strong> ·
-          <a
-            href="https://openweathermap.org/api"
-            target="_blank"
-            rel="noopener noreferrer"
-            >OpenWeatherMap API</a
-          >
-        </small>
+        <small>Built with <strong>HTML</strong> · <strong>CSS</strong> · <strong>JavaScript</strong> ·
+          <a href="https://openweathermap.org/api" target="_blank">OpenWeatherMap API</a></small>
       </div>
     </footer>
 
