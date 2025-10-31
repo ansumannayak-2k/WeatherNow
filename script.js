@@ -349,15 +349,20 @@ async function refreshCurrentWeather(city, cacheKey) {
 
 /* Fetch current weather by city (caching & 429 handling) */
 async function fetchWeather(city) {
-  if (!city) { showMessage('Please provide a city name.', 'error', true); return; }
-  const cacheKey = `current_${city.toLowerCase()}_${units}`;
-  const cached = getCache(cacheKey);
-  if (cached) {
-    renderWeatherCard(cached);
-    refreshCurrentWeather(city, cacheKey);
-    fetchForecast(city);
-    return;
+  try {
+    showSpinner(true);
+    const response = await fetch(`/api/weather-proxy?q=${encodeURIComponent(city)}`);
+    if (!response.ok) throw new Error("City not found");
+    const data = await response.json();
+    renderWeather(data);
+    saveLastSearchedCity(city);
+  } catch (err) {
+    showMessage(err.message || "Failed to fetch weather data", true);
+  } finally {
+    showSpinner(false);
   }
+}
+
 
   showSpinner(); clearMessage();
   weatherCard.innerHTML = `<p class="placeholder">Loading weather for <strong>${escapeHtml(city)}</strong>…</p>`;
@@ -385,7 +390,7 @@ async function fetchWeather(city) {
     showMessage('Network error — please check your connection and try again.', 'error', true);
     const fb = getCache(cacheKey); fb ? renderWeatherCard(fb) : renderWeatherPlaceholder();
   }
-}
+
 
 /* Fetch by coordinates */
 async function fetchWeatherByCoords(lat, lon) {
