@@ -20,7 +20,7 @@ Frontend: HTML5, CSS3, JavaScript (ES6) API: OpenWeatherMap API Deployment: Netl
 Jest + jsdom Storage: LocalStorage (Favorites, Cache, Preferences)
 
 ## Testing
-Run Jest tests locally: npm install npm test
+Run Jest tests locally: npm install and npm test.
 Ensure your package.json includes: "jest": { "testEnvironment": "jsdom" }
 
 ## How to Run Locally
@@ -34,5 +34,6 @@ Ensure your package.json includes: "jest": { "testEnvironment": "jsdom" }
 Email: ansumannayak800@gmail.com 
 LinkedIn: https://www.linkedin.com/in/ansumannayak-2k/
 GitHub: https://github.com/ansumannayak-2k
+
 
 
