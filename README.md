@@ -13,7 +13,7 @@ Responsive design and accessibility - Dark/Light mode - Continuous deployment (N
 
 ## Features
 Search Weather by City , Use My Location , Favorites , Dark / Light Mode , Switch Units (°C /
-°F) , Caching & Performance ■ 5-Day Forecast ■ Fully Responsive
+°F) , Caching & Performance , 5-Day Forecast , Fully Responsive
 
 ## Tech Stack
 Frontend: HTML5, CSS3, JavaScript (ES6) API: OpenWeatherMap API Deployment: Netlify Testing:
@@ -34,6 +34,7 @@ Ensure your package.json includes: "jest": { "testEnvironment": "jsdom" }
 Email: ansumannayak800@gmail.com 
 LinkedIn: https://www.linkedin.com/in/ansumannayak-2k/
 GitHub: https://github.com/ansumannayak-2k
+
 
 
 
