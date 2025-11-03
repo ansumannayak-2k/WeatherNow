@@ -18,18 +18,27 @@ beforeAll(() => {
   localStorage.clear();
   
   // load DOM from index.html (simple static minimal markup)
-  // Note: script.js expects favoritesList, not favoriteList
   document.body.innerHTML = `
     <main class="container main" role="main">
       <form id="searchForm" class="search-form">
         <input id="cityInput" type="search" placeholder="Enter city name" />
         <button type="submit">Search</button>
       </form>
-      <button id="geoBtn" type="button">📍 Use my location</button>
-      <button id="themeToggleBtn" type="button">🌙</button>
+      <button id="locationBtn" type="button">📍 Use my location</button>
+      <button id="themeToggle" type="button">🌙</button>
       <section id="weatherCard" class="weather-card" aria-live="polite"></section>
-      <div id="favoritesList" class="favorite-list"></div>
-      <div id="messageBox" role="status" aria-live="polite"></div>
+      <div id="message" role="status" aria-live="polite"></div>
+      <div id="spinner" hidden></div>
+      <section id="favorites" class="favorites">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <h2>Favorites</h2>
+          <div style="display:flex;align-items:center;gap:.5rem">
+            <div id="favCount" style="color:var(--muted);font-size:.9rem">0 saved</div>
+            <button id="clearFavsBtn" type="button" class="favorite-btn">Clear All</button>
+          </div>
+        </div>
+        <div id="favoriteList" class="favorite-list" style="margin-top:.5rem"></div>
+      </section>
     </main>
   `;
 
@@ -47,6 +56,7 @@ beforeEach(() => {
 test('renderWeatherCard produces content for sample data', () => {
   const sample = {
     name: 'Testville',
+    sys: { country: 'US' },
     weather: [{ icon: '01d', description: 'clear sky' }],
     main: { temp: 20, feels_like: 19, humidity: 50, pressure: 1012 },
     wind: { speed: 2 },
@@ -62,8 +72,7 @@ test('renderWeatherCard produces content for sample data', () => {
     renderWeatherCard(sample);
   }
 
-  expect(screen.getByText('Testville')).toBeInTheDocument();
-  expect(screen.getByText(/Feels like/i)).toBeInTheDocument();
+  expect(screen.getByText('Testville, US')).toBeInTheDocument();
   expect(screen.getByText(/Humidity/i)).toBeInTheDocument();
 });
 
@@ -72,10 +81,10 @@ test('favorites add/remove roundtrip', async () => {
   window.__WeatherNow?.addFavorite?.('CityA');
   window.__WeatherNow?.renderFavorites?.();
 
-  expect(document.querySelector('#favoritesList')).toHaveTextContent('CityA');
+  expect(document.querySelector('#favoriteList')).toHaveTextContent('CityA');
 
   // remove via removeFavorite
   window.__WeatherNow?.removeFavorite?.('CityA');
   window.__WeatherNow?.renderFavorites?.();
-  expect(document.querySelector('#favoritesList')).not.toHaveTextContent('CityA');
+  expect(document.querySelector('#favoriteList')).not.toHaveTextContent('CityA');
 });

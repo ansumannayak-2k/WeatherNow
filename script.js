@@ -18,15 +18,19 @@ const spinnerEl = document.getElementById('spinner');
 
 /* Helper: messages + spinner */
 function showMessage(text, type = 'info') {
-  messageEl.textContent = text;
-  messageEl.dataset.type = type;
+  if (messageEl) {
+    messageEl.textContent = text;
+    messageEl.dataset.type = type;
+  }
 }
 function clearMessage() {
-  messageEl.textContent = '';
-  delete messageEl.dataset.type;
+  if (messageEl) {
+    messageEl.textContent = '';
+    delete messageEl.dataset.type;
+  }
 }
-function showSpinner() { spinnerEl.hidden = false; }
-function hideSpinner() { spinnerEl.hidden = true; }
+function showSpinner() { if (spinnerEl) spinnerEl.hidden = false; }
+function hideSpinner() { if (spinnerEl) spinnerEl.hidden = true; }
 
 /* Simple localStorage caching */
 function setCache(key, data) {
@@ -66,21 +70,25 @@ function clearFavorites() {
 }
 function renderFavorites() {
   const favs = loadFavorites();
-  favCountEl.textContent = `${favs.length} saved`;
-  favoriteList.innerHTML = favs.length
-    ? favs.map(c => `
-      <div class="fav-pill">
-        <button class="favorite-btn fav-open" data-city="${c}">${c}</button>
-        <button class="favorite-remove" data-city="${c}">×</button>
-      </div>`).join('')
-    : `<p class="placeholder">No favorites yet.</p>`;
+  if (favCountEl) {
+    favCountEl.textContent = `${favs.length} saved`;
+  }
+  if (favoriteList) {
+    favoriteList.innerHTML = favs.length
+      ? favs.map(c => `
+        <div class="fav-pill">
+          <button class="favorite-btn fav-open" data-city="${c}">${c}</button>
+          <button class="favorite-remove" data-city="${c}">×</button>
+        </div>`).join('')
+      : `<p class="placeholder">No favorites yet.</p>`;
 
-  favoriteList.querySelectorAll('.fav-open').forEach(btn =>
-    btn.addEventListener('click', e => fetchWeather(e.target.dataset.city))
-  );
-  favoriteList.querySelectorAll('.favorite-remove').forEach(btn =>
-    btn.addEventListener('click', e => removeFavorite(e.target.dataset.city))
-  );
+    favoriteList.querySelectorAll('.fav-open').forEach(btn =>
+      btn.addEventListener('click', e => fetchWeather(e.target.dataset.city))
+    );
+    favoriteList.querySelectorAll('.favorite-remove').forEach(btn =>
+      btn.addEventListener('click', e => removeFavorite(e.target.dataset.city))
+    );
+  }
 }
 
 /* === Theme === */
@@ -161,7 +169,7 @@ function renderForecast(days) {
 
 /* === Render weather card === */
 function renderWeatherCard(data) {
-  const cityName = `${data.name}, ${data.sys.country}`;
+  const cityName = data.sys?.country ? `${data.name}, ${data.sys.country}` : data.name;
   const w = data.weather[0];
   const temp = Math.round(data.main.temp);
   const unit = units === 'metric' ? '°C' : '°F';
@@ -228,3 +236,13 @@ clearFavsBtn?.addEventListener('click', () => {
   const last = localStorage.getItem('lastCity');
   if (last) fetchWeather(last);
 })();
+
+/* === Expose functions for testing === */
+window.__WeatherNow = {
+  renderWeatherCard,
+  renderFavorites,
+  addFavorite,
+  removeFavorite,
+  loadFavorites,
+  fetchWeather
+};
