@@ -1,23 +1,27 @@
 # WeatherNow — Real-Time Weather App
-WeatherNow is a modern, responsive web application that provides real-time weather updates and
-5-day forecasts for any city worldwide. It uses the **OpenWeatherMap API**, **HTML**, **CSS**, and
-**JavaScript**, and is fully deployed on **Netlify**.
+WeatherNow is a React-based real-time weather application that allows users to search for city weather, use geolocation to detect their current location, and view detailed weather information with a clean, responsive UI.
 
 ## Live Demo  **[View Deployed App on Netlify](https://weather-now-project-078921.netlify.app/)**
 
-## Project Overview
-This project was built as a hands-on exercise to understand **API integration**, **frontend
-development**, and **deployment workflows**. It showcases real-world concepts like: - Working with
-APIs (OpenWeatherMap) - Using browser features (Geolocation, LocalStorage) - Client-side caching -
-Responsive design and accessibility - Dark/Light mode - Continuous deployment (Netlify)
-
 ## Features
-Search Weather by City , Use My Location , Favorites , Dark / Light Mode , Switch Units (°C /
-°F) , Caching & Performance , 5-Day Forecast , Fully Responsive
+- Search weather by city name
+- Geolocation-based weather lookup for current location
+- Temperature unit toggle: **°C / °F**
+- Save favourite locations using `localStorage`
+- Caching of API responses to reduce repeat API calls
+- Mobile-first responsive UI with **dark mode**
+- Proper error handling:
+  - Invalid city (404)
+  - Network/API errors
+  - Rate limit errors
 
 ## Tech Stack
-Frontend: HTML5, CSS3, JavaScript (ES6) API: OpenWeatherMap API Deployment: Netlify Testing:
-Jest + jsdom Storage: LocalStorage (Favorites, Cache, Preferences)
+**Frontend:** ReactJS, JavaScript (ES6+), CSS3
+**API:** [OpenWeatherMap API](https://openweathermap.org/api)
+**State & Data:**
+- React functional components & hooks
+- `localStorage` for favourites and cached data
+**Tools:** Git, GitHub, VS Code, Chrome DevTools
 
 ## Testing
 Run Jest tests locally: npm install and npm test.
@@ -34,6 +38,7 @@ Ensure your package.json includes: "jest": { "testEnvironment": "jsdom" }
 Email: ansumannayak800@gmail.com 
 LinkedIn: https://www.linkedin.com/in/ansumannayak-2k/
 GitHub: https://github.com/ansumannayak-2k
+
 
 
 
